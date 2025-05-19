@@ -20,9 +20,7 @@ interface Location {
 
 function TicketList() {
   const [tab, setTab] = useState(0);
-
   const [locationId, setLocationId] = useState<string>("");
-
   const [allTickets, setAllTickets] = useState<any[]>([]);
   const [searchTerm, setSearchTerm] = useState("");
   const [checkinRefreshKey, setCheckinRefreshKey] = useState(0);
@@ -70,7 +68,9 @@ function TicketList() {
     fetchAllTickets();
   }, [locationId]);
 
-  const tickets = allTickets.map((item) => item.ticket).filter((ticket) => ticket.bookingId?.toLowerCase().includes(searchTerm.toLowerCase()));
+  const tickets = allTickets
+    .filter((item) => item.ticket.bookingId?.toLowerCase().includes(searchTerm.toLowerCase()) || item.slotNumber?.toLowerCase().includes(searchTerm.toLowerCase()))
+    .map((item) => item.ticket);
 
   const { data: checkoutTickets = [] } = useFetchData<any>({
     url: `${API_BASE_URL}/app-data-service/tickets/checkout-requests?page=0&size=100`,
@@ -130,13 +130,13 @@ function TicketList() {
       label: "Check in",
       component: (
         <CheckinTab
-          tickets={CheckinTickets.filter((t) => t.ticket?.id?.toLowerCase().includes(searchTerm.toLowerCase()))}
+          tickets={CheckinTickets.filter((t) => t.ticket?.id?.toLowerCase().includes(searchTerm.toLowerCase()) || t.slot?.slotNumber?.toLowerCase().includes(searchTerm.toLowerCase()))}
           onRefresh={() => {
             setCheckinRefreshKey((prev) => prev + 1);
           }}
         />
       ),
-      count: CheckinTickets.filter((t) => t.ticket?.id?.toLowerCase().includes(searchTerm.toLowerCase())).length,
+      count: CheckinTickets.filter((t) => t.ticket?.id?.toLowerCase().includes(searchTerm.toLowerCase()) || t.slot?.slotNumber?.toLowerCase().includes(searchTerm.toLowerCase())).length,
     },
     {
       label: "On Service",
@@ -146,21 +146,24 @@ function TicketList() {
     {
       label: "Extend",
       component: (
-        <ExtendTab tickets={verifyRequiredTickets.filter((t) => t.ticket?.id?.toLowerCase().includes(searchTerm.toLowerCase()))} onReassignSuccess={() => setVerifyRefreshKey((prev) => prev + 1)} />
+        <ExtendTab
+          tickets={verifyRequiredTickets.filter((t) => t.ticket?.id?.toLowerCase().includes(searchTerm.toLowerCase()) || t.slotNumber?.toLowerCase().includes(searchTerm.toLowerCase()))}
+          onReassignSuccess={() => setVerifyRefreshKey((prev) => prev + 1)}
+        />
       ),
-      count: verifyRequiredTickets.filter((t) => t.ticket?.id?.toLowerCase().includes(searchTerm.toLowerCase())).length,
+      count: verifyRequiredTickets.filter((t) => t.ticket?.id?.toLowerCase().includes(searchTerm.toLowerCase()) || t.slotNumber?.toLowerCase().includes(searchTerm.toLowerCase())).length,
     },
     {
       label: "Change Time",
       component: (
         <ChangeTimeTab
-          tickets={changeTimeTickets.filter((t) => t.ticket?.id?.toLowerCase().includes(searchTerm.toLowerCase()))}
+          tickets={changeTimeTickets.filter((t) => t.ticket?.id?.toLowerCase().includes(searchTerm.toLowerCase()) || t.slotNumber?.toLowerCase().includes(searchTerm.toLowerCase()))}
           locationId={locationId}
           isLoading={isLoading}
           onReassignSuccess={() => setChangeTimeRefreshKey((prev) => prev + 1)}
         />
       ),
-      count: changeTimeTickets.filter((t) => t.ticket?.id?.toLowerCase().includes(searchTerm.toLowerCase())).length,
+      count: changeTimeTickets.filter((t) => t.ticket?.id?.toLowerCase().includes(searchTerm.toLowerCase()) || t.slotNumber?.toLowerCase().includes(searchTerm.toLowerCase())).length,
     },
     {
       label: "Overdue",
@@ -171,13 +174,13 @@ function TicketList() {
       label: "Check out",
       component: (
         <CheckoutTab
-          tickets={checkoutTickets.filter((t) => t.ticket?.id?.toLowerCase().includes(searchTerm.toLowerCase()))}
+          tickets={checkoutTickets.filter((t) => t.ticket?.id?.toLowerCase().includes(searchTerm.toLowerCase()) || t.slot?.slotNumber?.toLowerCase().includes(searchTerm.toLowerCase()))}
           onRefresh={() => {
             setCheckoutRefreshKey((prev) => prev + 1);
           }}
         />
       ),
-      count: checkoutTickets.filter((t) => t.ticket?.id?.toLowerCase().includes(searchTerm.toLowerCase())).length,
+      count: checkoutTickets.filter((t) => t.ticket?.id?.toLowerCase().includes(searchTerm.toLowerCase()) || t.slot?.slotNumber?.toLowerCase().includes(searchTerm.toLowerCase())).length,
     },
   ];
 
@@ -220,7 +223,7 @@ function TicketList() {
 
           {!isLoading && locationId && (
             <>
-              <SearchBar value={searchTerm} onChange={(val) => setSearchTerm(val)} placeholder="Search by ticket id" />
+              <SearchBar value={searchTerm} onChange={(val) => setSearchTerm(val)} placeholder="Search by ticket id/ Lot number" />
 
               <Tabs value={tab} onChange={(_, newTab) => setTab(newTab)} aria-label="Ticket tabs" variant="scrollable" scrollButtons="auto" textColor="primary" indicatorColor="primary">
                 {tabs.map((tabItem, idx) => (

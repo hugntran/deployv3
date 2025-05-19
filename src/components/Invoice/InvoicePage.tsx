@@ -2,6 +2,7 @@ import { useState, useEffect } from "react";
 import { fetchWithAuth } from "../../api/fetchWithAuth";
 import { useNavigate } from "react-router-dom";
 import Pagination from "../ContentBottom/Pagination";
+import { Tooltip } from "antd";
 import { API_BASE_URL } from "../../config";
 
 interface Invoice {
@@ -151,9 +152,11 @@ const InvoicePage = ({ searchQuery, locationFilter, typeFilter, fromDate, toDate
         <div className="text-gray-600 text-sm">
           Total invoices: <span className="font-semibold">{totalInvoices}</span>
         </div>
-        <div className="text-gray-600 text-sm">
-          Total revenue: <span className="font-semibold">{formatUSD(totalRevenue)}</span>
-        </div>
+        <Tooltip title="Total revenue calculated from all invoices within the selected date range and location.">
+          <div className="text-gray-600 text-sm cursor-pointer">
+            Total revenue: <span className="font-semibold">{formatUSD(totalRevenue)}</span>
+          </div>
+        </Tooltip>
       </div>
       <div className="overflow-x-auto">
         <table className="w-full table-auto border-collapse border border-gray-200">

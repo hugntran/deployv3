@@ -252,7 +252,7 @@ export default function EcommerceMetrics() {
           <RecentTransactions />
         </div>
         <div className="w-full">
-          <StaffRevenueTable />
+          <StaffRevenueTable startDate={startDate} endDate={endDate} />
         </div>
       </div>
     </div>

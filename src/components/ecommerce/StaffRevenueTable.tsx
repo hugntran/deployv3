@@ -19,16 +19,20 @@ interface CombinedData {
   totalRevenue: number;
 }
 
-export default function StaffRevenueTable() {
+interface StaffRevenueTableProps {
+  startDate: Date | null;
+  endDate: Date | null;
+}
+
+export default function StaffRevenueTable({ startDate, endDate }: StaffRevenueTableProps) {
   const [data, setData] = useState<CombinedData[]>([]);
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState<string | null>(null);
 
-  // Lấy ngày hôm nay dạng YYYY-MM-DD
-  const today = new Date().toISOString().slice(0, 10);
-
   useEffect(() => {
     const fetchData = async () => {
+      if (!startDate || !endDate) return;
+
       setLoading(true);
       setError(null);
 
@@ -61,11 +65,14 @@ export default function StaffRevenueTable() {
         // 3. Fetch revenue per staff
         const allRevenues: CombinedData[] = [];
 
+        const fromDate = startDate.toISOString().slice(0, 10);
+        const toDate = endDate.toISOString().slice(0, 10);
+
         for (const staff of staffUsers) {
           const params = new URLSearchParams({
             groupType: "day",
-            fromDate: today,
-            toDate: today,
+            fromDate,
+            toDate,
             staffId: staff.id,
           });
 
@@ -96,14 +103,15 @@ export default function StaffRevenueTable() {
     };
 
     fetchData();
-  }, [today]);
+  }, [startDate, endDate]);
 
+  if (!startDate || !endDate) return <p>Please select a date range to view revenue data.</p>;
   if (loading) return <p>Loading staff revenue data...</p>;
   if (error) return <p className="text-red-500">Error: {error}</p>;
 
   return (
     <div className="max-w-4xl mx-auto mt-4">
-      <h2 className="text-lg font-semibold text-gray-800 dark:text-gray-200 mb-2">💵Revenue collected by staff today</h2>
+      <h2 className="text-lg font-semibold text-gray-800 dark:text-gray-200 mb-2">💵 Revenue collected by staff</h2>
 
       <div className="overflow-x-auto">
         <table className="w-full border-collapse border border-gray-300 dark:border-gray-700 text-sm">
@@ -118,7 +126,7 @@ export default function StaffRevenueTable() {
             {data.length === 0 ? (
               <tr>
                 <td className="border px-4 py-2 text-center italic text-gray-500" colSpan={3}>
-                  <p>{today}: No data available</p>
+                  <p>No data available for the selected period.</p>
                 </td>
               </tr>
             ) : (

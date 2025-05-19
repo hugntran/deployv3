@@ -64,10 +64,8 @@ export default function StaffRevenueTable() {
         for (const staff of staffUsers) {
           const params = new URLSearchParams({
             groupType: "day",
-            // fromDate: today,
-            // toDate: today,
-            fromDate: "2025-04-01",
-            toDate: "2025-05-15",
+            fromDate: today,
+            toDate: today,
             staffId: staff.id,
           });
 

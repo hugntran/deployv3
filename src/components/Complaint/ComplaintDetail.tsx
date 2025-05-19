@@ -80,10 +80,10 @@ const ComplaintDetail = () => {
         <table className="w-full table-fixed border border-gray-300">
           <tbody>
             <tr className="border-b">
-              <td className="border px-3 py-2 font-semibold">Customer E-Mail:</td>
+              <td className="border px-3 py-2 font-semibold">Customer</td>
+              <td className="border px-3 py-2">{complaint.userEmail.split("@")[0]}</td>
+              <td className="border px-3 py-2 font-semibold">E-Mail:</td>
               <td className="border px-3 py-2">{complaint.userEmail}</td>
-              <td className="border px-3 py-2 font-semibold">Mobile:</td>
-              <td className="border px-3 py-2">N/A</td>
             </tr>
             <tr className="border-b">
               <td className="border px-3 py-2 font-semibold">Date of Complaint:</td>
@@ -110,7 +110,17 @@ const ComplaintDetail = () => {
           {Array.isArray(complaint.images) && complaint.images.length > 0 && (
             <div className="flex flex-wrap gap-3 pt-3">
               {complaint.images.map((url: string, idx: number) => (
-                <img key={idx} src={url} alt={`Image-${idx}`} className="w-32 h-32 object-cover border rounded cursor-pointer" onClick={() => setSelectedImage(url)} />
+                <img
+                  key={idx}
+                  src={url}
+                  alt={`Image-${idx}`}
+                  className="w-32 h-32 object-cover border rounded cursor-pointer"
+                  onClick={() => setSelectedImage(url)}
+                  onError={(e) => {
+                    e.currentTarget.onerror = null;
+                    e.currentTarget.src = "/images/country/anh-27-meme-dang-yeu-didongmy.jpg";
+                  }}
+                />
               ))}
             </div>
           )}

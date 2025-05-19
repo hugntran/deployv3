@@ -34,7 +34,7 @@ const UpcomingEco: React.FC = () => {
         );
 
         const upcomingTickets = res.content.filter((t) => {
-          const start = new Date(t.ticket.startDateTime);
+          const start = new Date(t.ticket.endDateTime);
           return start > now && start <= endOfToday && t.ticket.isCheckIn === null;
         });
 

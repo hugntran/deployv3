@@ -43,8 +43,15 @@ const VoucherDetails: React.FC = () => {
       </button>
 
       <div className="flex flex-col sm:flex-row gap-6">
-        <img src={voucher.thumbnailUrl} alt={voucher.title} className="w-48 h-48 object-cover rounded-xl border shadow-sm" />
-
+        <img
+          src={voucher.thumbnailUrl || "/images/country/intro-to-simpsons.jpg"}
+          alt={voucher.title}
+          className="w-48 h-48 object-cover rounded-xl border shadow-sm"
+          onError={(e) => {
+            e.currentTarget.onerror = null;
+            e.currentTarget.src = "/images/country/intro-to-simpsons.jpg";
+          }}
+        />
         <div className="flex-1 space-y-2">
           <h2 className="text-3xl font-bold text-gray-800">{voucher.title}</h2>
 

@@ -76,13 +76,15 @@ const UserDetailPage: React.FC = () => {
       {user ? (
         <div className="bg-white shadow-lg rounded-lg p-6 border border-gray-200">
           <div className="flex items-center mb-6">
-            {user.avatarUrl ? (
-              <img src={user.avatarUrl} alt="Avatar" className="w-24 h-24 rounded-full object-cover mr-6" />
-            ) : (
-              <div className="w-24 h-24 bg-gray-300 rounded-full mr-6 flex items-center justify-center">
-                <span className="text-white text-lg">No Image</span>
-              </div>
-            )}
+            <img
+              src={user.avatarUrl || "/images/country/handsome-squidward-42402-400x250.jpg"}
+              alt="Avatar"
+              className="w-24 h-24 rounded-full object-cover mr-6"
+              onError={(e) => {
+                e.currentTarget.onerror = null;
+                e.currentTarget.src = "/images/country/handsome-squidward-42402-400x250.jpg";
+              }}
+            />
             <div>
               <p className="text-xl text-gray-700">
                 <strong>Username:</strong> {user.username ? user.username.split("@")[0] : "N/A"}

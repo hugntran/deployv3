@@ -32,9 +32,12 @@ export default function CustomerManagement() {
 
             <div className="flex justify-end gap-4">
               {/* Role filter dropdown */}
-              <div className="flex items-center text-sm">
+              <div className="flex items-center gap-2 text-sm">
+                <label htmlFor="roleFilter" className="whitespace-nowrap font-medium text-gray-700">
+                  Filter by role:
+                </label>
                 <select id="roleFilter" value={roleFilter} onChange={(e) => setRoleFilter(e.target.value)} className="p-2 border rounded-lg">
-                  <option value="">Filter by roles: All</option>
+                  <option value="">All</option>
                   {roles.map((role, index) => (
                     <option key={index} value={role}>
                       {role}
@@ -44,9 +47,12 @@ export default function CustomerManagement() {
               </div>
 
               {/* Status filter dropdown */}
-              <div className="flex items-center text-sm">
+              <div className="flex items-center gap-2 text-sm">
+                <label htmlFor="statusFilter" className="whitespace-nowrap font-medium text-gray-700">
+                  Filter by status:
+                </label>
                 <select id="statusFilter" value={statusFilter} onChange={(e) => setStatusFilter(e.target.value)} className="p-2 border rounded-lg">
-                  <option value="">Filter by Status: All</option>
+                  <option value="">All</option>
                   <option value="Verified">Verified</option>
                   <option value="Unverified">Unverified</option>
                 </select>

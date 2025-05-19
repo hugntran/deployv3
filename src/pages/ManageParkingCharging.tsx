@@ -24,13 +24,19 @@ export default function ManageParkingCharging() {
               <Stack direction={{ xs: "column", sm: "row" }} spacing={2} flex={1}>
                 <SearchBar value={searchTerm} onChange={setSearchTerm} placeholder="🔍 Search by location/ address" />
 
-                <FormControl size="small" sx={{ minWidth: 150 }}>
-                  <InputLabel>Filter by status</InputLabel>
-                  <Select value={selectedStatus} label="Status" onChange={(e) => setSelectedStatus(e.target.value)}>
-                    <MenuItem value="VALID">Active</MenuItem>
-                    <MenuItem value="INVALID">Inactive</MenuItem>
-                  </Select>
-                </FormControl>
+                <div style={{ display: "flex", alignItems: "center", gap: "8px" }}>
+                  <label htmlFor="status-select" style={{ fontSize: "0.875rem", fontWeight: 400 }}>
+                    Filter by:
+                  </label>
+
+                  <FormControl size="small" sx={{ minWidth: 150 }}>
+                    <InputLabel id="status-select-label">Status</InputLabel>
+                    <Select labelId="status-select-label" id="status-select" value={selectedStatus} label="Status" onChange={(e) => setSelectedStatus(e.target.value)}>
+                      <MenuItem value="VALID">Active</MenuItem>
+                      <MenuItem value="INVALID">Inactive</MenuItem>
+                    </Select>
+                  </FormControl>
+                </div>
               </Stack>
 
               <Stack direction={{ xs: "column", sm: "row" }} spacing={2}>

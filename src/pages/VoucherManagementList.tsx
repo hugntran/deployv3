@@ -23,15 +23,24 @@ export default function VoucherManagementList() {
         <div className="flex flex-col gap-6">
           <div className="flex flex-col md:flex-row md:flex-wrap md:items-center md:justify-between gap-4 bg-gray-50 p-3 rounded-lg shadow-sm">
             <div className="flex flex-col sm:flex-row gap-3 w-full md:w-auto">
-              <input type="text" value={searchTerm} onChange={(e) => setSearchTerm(e.target.value)} placeholder="🔍 Search by code or title..." className="px-4 py-2 border rounded-lg" />
-              <select value={statusFilter} onChange={handleStatusChange} className="px-4 py-2 border rounded-lg text-sm">
-                <option value="ALL">Filter by status: All</option>
-                <option value="IN_PROGRESS">In Progress</option>
-                <option value="UP_COMING">Up Coming</option>
-                <option value="EXPIRED">Expired</option>
-              </select>
-            </div>
+              {/* Search input with label */}
+              <div className="flex items-center gap-2">
+                <input id="search" type="text" value={searchTerm} onChange={(e) => setSearchTerm(e.target.value)} placeholder="🔍 Search by code or title..." className="px-4 py-2 border rounded-lg" />
+              </div>
 
+              {/* Status dropdown with label */}
+              <div className="flex items-center gap-2">
+                <label htmlFor="statusFilter" className="text-sm font-medium text-gray-700 whitespace-nowrap">
+                  Filter by status:
+                </label>
+                <select id="statusFilter" value={statusFilter} onChange={handleStatusChange} className="px-4 py-2 border rounded-lg text-sm">
+                  <option value="ALL">All</option>
+                  <option value="IN_PROGRESS">In Progress</option>
+                  <option value="UP_COMING">Up Coming</option>
+                  <option value="EXPIRED">Expired</option>
+                </select>
+              </div>
+            </div>
             {isAdmin && <FloatingAddButton to="/add-voucher" />}
           </div>
 

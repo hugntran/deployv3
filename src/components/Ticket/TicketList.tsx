@@ -220,7 +220,7 @@ function TicketList() {
 
           {!isLoading && locationId && (
             <>
-              <SearchBar value={searchTerm} onChange={(val) => setSearchTerm(val)} placeholder="Search by Booking ID" />
+              <SearchBar value={searchTerm} onChange={(val) => setSearchTerm(val)} placeholder="Search by ticket id" />
 
               <Tabs value={tab} onChange={(_, newTab) => setTab(newTab)} aria-label="Ticket tabs" variant="scrollable" scrollButtons="auto" textColor="primary" indicatorColor="primary">
                 {tabs.map((tabItem, idx) => (

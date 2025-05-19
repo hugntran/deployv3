@@ -261,7 +261,7 @@ export default function Ecommerce() {
           {/* Car in location */}
           <div className="flex-1 min-w-[180px] max-w-[22%] flex flex-col items-center bg-yellow-50 dark:bg-yellow-900 rounded-2xl p-6 shadow-sm hover:shadow-lg transition-shadow">
             <h2 className="text-base font-semibold text-yellow-800 dark:text-yellow-200 mb-4 tracking-wide text-center">🅿️ Cars in Lot</h2>
-            <h3 className="text-4xl font-extrabold text-yellow-700 dark:text-yellow-400">{checkinCount ?? "Loading..."}</h3>
+            <h3 className="text-4xl font-extrabold text-yellow-700 dark:text-yellow-400">{checkinCount != null ? checkinCount - (checkoutCountInMay ?? 0) : "Loading..."}</h3>
             <span className="text-lg font-semibold text-yellow-700 dark:text-yellow-300 mt-1">Cars</span>
           </div>
 

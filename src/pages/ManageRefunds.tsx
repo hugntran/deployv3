@@ -69,10 +69,8 @@ export default function ManageRefunds() {
               <SearchBar value={searchTerm} onChange={setSearchTerm} placeholder="🔍 Search by name, ID or description" />
             </div>
 
-            <div className="w-full md:w-auto flex flex-col">
-              {/* Label chú thích */}
-              <label className="mb-2 text-sm font-medium text-gray-700">Filter by time:</label>
-
+            <div className="w-full md:w-auto flex items-center gap-2">
+              <label className="text-sm font-medium text-gray-700 whitespace-nowrap">Filter by time:</label>
               <DateRangeFilter startDate={startDate} endDate={endDate} onStartDateChange={setStartDate} onEndDateChange={setEndDate} onQuickSelect={handleQuickSelect} />
             </div>
           </div>
